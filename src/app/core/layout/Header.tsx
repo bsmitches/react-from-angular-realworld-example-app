@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/hooks/useAuth';
 
 export function Header() {
@@ -10,52 +10,89 @@ export function Header() {
         <Link className="navbar-brand" to="/">
           conduit
         </Link>
-        <ul className="nav navbar-nav pull-xs-right">
-          <li className="nav-item">
-            <Link className="nav-link" to="/">
-              Home
-            </Link>
-          </li>
-          {isAuthenticated ? (
-            <>
+
+        {!isAuthenticated ? (
+          <ul className="nav navbar-nav pull-xs-right">
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/">
+                Home
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
+                to="/login"
+              >
+                Sign in
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
+                to="/register"
+              >
+                Sign up
+              </NavLink>
+            </li>
+          </ul>
+        ) : (
+          <ul className="nav navbar-nav pull-xs-right">
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
+                to="/"
+                end
+              >
+                Home
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
+                to="/editor"
+              >
+                <i className="ion-compose"></i>&nbsp;New Article
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `nav-link${isActive ? ' active' : ''}`
+                }
+                to="/settings"
+              >
+                <i className="ion-gear-a"></i>&nbsp;Settings
+              </NavLink>
+            </li>
+            {user && (
               <li className="nav-item">
-                <Link className="nav-link" to="/editor">
-                  <i className="ion-compose"></i>&nbsp;New Article
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/settings">
-                  <i className="ion-gear-a"></i>&nbsp;Settings
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to={`/profile/${user?.username}`}>
-                  {user?.image && (
+                <NavLink
+                  className={({ isActive }) =>
+                    `nav-link${isActive ? ' active' : ''}`
+                  }
+                  to={`/profile/${user.username}`}
+                >
+                  {user.image && (
                     <img
                       src={user.image}
                       className="user-pic"
                       alt={user.username}
                     />
                   )}
-                  {user?.username}
-                </Link>
+                  {user.username}
+                </NavLink>
               </li>
-            </>
-          ) : (
-            <>
-              <li className="nav-item">
-                <Link className="nav-link" to="/login">
-                  Sign in
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/register">
-                  Sign up
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+            )}
+          </ul>
+        )}
       </div>
     </nav>
   );
