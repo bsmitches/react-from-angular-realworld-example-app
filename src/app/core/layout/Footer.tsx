@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 
 export function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer>
       <div className="container">
@@ -8,9 +10,11 @@ export function Footer() {
           conduit
         </Link>
         <span className="attribution">
-          An interactive learning project from{' '}
-          <a href="https://thinkster.io">Thinkster</a>. Code &amp; design
-          licensed under MIT.
+          &copy; {currentYear}. An interactive learning project from{' '}
+          <a href="https://github.com/gothinkster/realworld">
+            RealWorld OSS Project
+          </a>
+          . Code licensed under MIT.
         </span>
       </div>
     </footer>
